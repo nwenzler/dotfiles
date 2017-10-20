@@ -1,0 +1,226 @@
+; My own try at a Polybar dotfile
+
+;------------------------------------------------------------
+; VARIABLES
+;------------------------------------------------------------
+
+[colors]
+
+black =     #131313
+grey =      #B2B2B2
+white =     #FFFFFF
+
+red =       #EE3333
+pink =      #D75F87
+blue =      #11AAAA
+purple =    #AA00FF
+green =     #5EAA11
+orange =    #FF9500
+;it's actually greenish:
+yellow =    #AAAA11
+light-yellow = #F5D393
+
+
+background =        ${self.black}
+background-alt =    ${self.black}
+
+foreground =        ${self.grey}
+foreground-alt =    ${self.grey}
+
+
+;------------------------------------------------------------
+; BAR SETTINGS
+;------------------------------------------------------------
+
+[bar/example]
+
+;monitor =       DP-1
+fixed-center =  true
+width =         100%
+height =        30
+
+background =    ${colors.background}
+foreground =    ${colors.foreground}
+
+padding-left =  2
+padding-right = 2
+
+font-0 =    DejaVu Sans Mono:size=12
+font-1 =    FontAwesome:size=12
+
+modules-left =      i3 music
+modules-center =    date
+modules-right =     xbacklight volume wlan memory battery
+
+; needs to be changed maybe
+module-margin = 1    
+
+
+;--------------------------------------------------------------
+; MODULE SETTINGS
+;--------------------------------------------------------------
+
+[module/i3]
+type =  internal/i3
+
+format =        <label-state> <label-mode>
+
+ws-icon-0 =     1;
+ws-icon-1 =     2;
+ws-icon-2 =     3;
+ws-icon-3 =     4;
+ws-icon-4 =     5;
+ws-icon-5 =     6;
+ws-icon-6 =     7;
+ws-icon-7 =     8;
+ws-icon-8 =     9;
+ws-icon-9 =    10;
+ws-icon-default = 
+
+
+label-focused = 
+label-focused-foreground =  ${colors.pink}
+label-focused-padding =     1
+
+label-unfocused = 
+label-unfocused-foreground = ${colors.orange}
+label-unfocused-padding =   1
+
+label-visible = 
+label-visible-foreground =  ${colors.orange}
+label-visivle-padding =     1
+
+label-urgent = 
+label-urgent-foreground =   ${colors.orange}
+label-urgent-background =   ${colors.red}
+label-urgent-padding =      1
+
+
+[module/music]
+
+type = custom/script
+interval = 2
+
+label = %output:0:45:...%
+exec = ~/.config/polybar/mpris.sh
+
+[module/date]
+type =      internal/date
+interval =  1.0
+
+format =  <label>
+format-foreground = ${colors.blue}
+
+date =  %A %d %b
+time =  %H:%M
+label = %time% %date%
+
+
+[module/xbacklight]
+type =      internal/xbacklight
+format =    <label> <bar>
+format-foreground = ${colors.pink}
+
+label = 
+
+bar-width =    5
+bar-indicator = 
+bar-fill = ─
+bar-empty = ─
+
+[module/volume]
+type = internal/volume
+
+format-volume = <label-volume> <bar-volume>
+format-muted =<label-muted>
+
+format-volume-foreground = ${colors.blue}
+format-muted-foreground = ${colors.blue}
+
+label-volume = 
+label-muted =  MUTED
+
+bar-volume-width = 5
+bar-volume-indicator = 
+bar-volume-fill = ─
+bar-volume-empty = ─
+
+
+[module/wlan]
+type = internal/network
+interface = wlp1s0
+;interval = 1
+
+format-connected = <label-connected>
+format-connected-foreground = ${colors.yellow}
+
+label-connected =  %essid%
+
+format-disconnected = <label-disconnected>
+format-disconnected-foreground = ${colors.yellow}
+
+label-disconnected = "NO WIFI"
+
+;ramp-signal-0 = 
+;ramp-signal-1 = 
+;ramp-signal-2 = 
+;ramp-signal-3 = 
+;ramp-signal-4 = 
+
+
+;[module/cpu]
+;type = internal/cpu
+;interval = 1
+
+;format = <label>
+;format-foreground = ${colors.orange}
+;label = CPU %percentage%%
+
+[module/memory]
+type = internal/memory
+interval = 1
+
+format = <label>
+format-foreground = ${colors.orange}
+label =  %gb_used% (%percentage_used%%)
+
+
+
+[module/battery]
+type = internal/battery
+poll-interval = 5
+format-charging-foreground = ${colors.light-yellow}
+format-discharging-foreground = ${colors.light-yellow}
+format-full-foreground = ${colors.light-yellow}
+
+full-at = 100
+;battery = BAT1
+;adapter = ACAD
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-full = %percentage%%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 500
+
+
+;[module/powermenu] - TODO
+
+
+[settings]
+screenchange-reload = true
